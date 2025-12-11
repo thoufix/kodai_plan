@@ -1,150 +1,275 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Kodaikanal Trip Plan – Dindigul → Kodaikanal</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        max-width: 720px;
-        margin: auto;
-        padding: 20px;
-        line-height: 1.6;
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kodaikanal Trip Plan (Dindigul → Kodaikanal)</title>
+
+  <!-- Dark theme, simple clean layout -->
+  <style>
+    :root{
+      --bg:#0b0e11;
+      --panel:#0f1418;
+      --muted:#98a0aa;
+      --accent:#7dd3fc;
+      --accent-2:#60a5fa;
+      --card:#10161a;
+      --glass: rgba(255,255,255,0.03);
+      --success:#34d399;
     }
-    h1, h2, h3 {
-        color: #333;
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,var(--bg) 0%, #061018 100%);
+      color:#e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      padding:18px;
     }
-    .section {
-        margin-bottom: 30px;
+    .wrap{
+      max-width:920px;
+      margin:18px auto;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:12px;
+      padding:18px;
+      box-shadow:0 6px 30px rgba(2,6,23,0.7);
+      border:1px solid rgba(255,255,255,0.03);
     }
-    .checklist input {
-        margin-right: 8px;
-        transform: scale(1.3);
+    header{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin-bottom:6px;
     }
-</style>
+    .logo{
+      width:56px;height:56px;border-radius:10px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:grid;place-items:center;color:#022; font-weight:700;
+      box-shadow:0 4px 18px rgba(0,0,0,0.5);
+      font-family: ui-rounded, system-ui, -apple-system;
+    }
+    h1{font-size:1.15rem;margin:0 0 2px 0}
+    .meta{color:var(--muted);font-size:0.92rem}
+    hr{border:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.03),transparent);margin:16px 0}
+    section{margin-top:10px}
+    .grid{
+      display:grid;grid-template-columns:1fr 320px;gap:18px;
+    }
+    @media (max-width:880px){ .grid{grid-template-columns:1fr} .sidebar{order:2} }
+    .card{
+      background:var(--card);
+      border-radius:10px;padding:14px;border:1px solid rgba(255,255,255,0.02);
+    }
+    .muted{color:var(--muted);font-size:0.95rem}
+    ul{padding-left:1.1rem;margin:6px 0}
+    li {margin:6px 0}
+    .bus-list{display:flex;flex-wrap:wrap;gap:8px}
+    .chip{
+      background:var(--glass);padding:8px 10px;border-radius:8px;font-weight:600;color:var(--accent-2);
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .checklist{display:flex;flex-direction:column;gap:8px}
+    label.item{
+      display:flex;gap:12px;align-items:center;padding:8px;border-radius:8px;background:linear-gradient(90deg, rgba(255,255,255,0.008), transparent);
+      border:1px solid rgba(255,255,255,0.02);
+    }
+    input[type=checkbox]{width:18px;height:18px;border-radius:4px;accent-color:var(--accent-2)}
+    .small{font-size:0.92rem;color:var(--muted)}
+    .btn{
+      background:linear-gradient(90deg,var(--accent-2),var(--accent));border:0;padding:8px 12px;border-radius:8px;color:#022;font-weight:700;
+      cursor:pointer;box-shadow:0 6px 18px rgba(96,165,250,0.08)
+    }
+    .row{display:flex;gap:10px;align-items:center}
+    .right{margin-left:auto}
+    .note{background:linear-gradient(90deg, rgba(124,58,237,0.06), rgba(96,165,250,0.03)); padding:10px;border-radius:8px;color:var(--muted);font-size:0.95rem}
+    footer{margin-top:12px;color:var(--muted);font-size:0.82rem;text-align:center}
+    a { color:var(--accent); text-decoration: none }
+    .bold{font-weight:700}
+    .date{font-weight:600;color:var(--accent-2)}
+    .location{color:var(--muted)}
+    .inline{display:inline-block}
+  </style>
 </head>
 <body>
+  <div class="wrap" role="main">
+    <header>
+      <div class="logo">KD</div>
+      <div>
+        <h1>Kodaikanal Trip Plan (Dindigul → Kodaikanal)</h1>
+        <div class="meta">Date: <span class="date">13–14 Dec 2025</span> · People: You, Doody, Shayan · Parking: Selvi Car Parking — ₹200 / 2 days</div>
+      </div>
+      <div class="right" style="margin-left:auto">
+        <button id="printBtn" class="btn">Print</button>
+      </div>
+    </header>
 
-<h1>🚗 Kodaikanal Trip Plan (Short Version)</h1>
+    <hr />
 
-<p><strong>People:</strong> You, Doody, Shayan<br>
-<strong>Parking:</strong> Selvi Car Parking — ₹200 for 2 days<br>
-<strong>Dates:</strong> Saturday & Sunday</p>
+    <div class="grid">
+      <!-- main column -->
+      <div>
+        <section class="card">
+          <div class="row" style="align-items:flex-start">
+            <div>
+              <div style="font-size:0.98rem;color:var(--muted)">Plan summary</div>
+              <h2 style="margin:6px 0 4px 0">Overall flow</h2>
+            </div>
+          </div>
 
-<hr>
+          <ol style="margin-top:8px">
+            <li>Drive → Dindigul (arrive ~ <span class="bold">08:00</span>)</li>
+            <li>Park at <span class="bold">Selvi Car Parking (277, Mendonsa Colony)</span> — ₹200 / 2 days</li>
+            <li>Walk to Dindigul Bus Stand → take TNSTC local bus up to Kodai</li>
+            <li>Check in at stay by <span class="bold">11:00 AM (Saturday)</span></li>
+            <li>Saturday evening: Sangeeth</li>
+            <li>Sunday morning: Wedding — <span class="bold">Green Pastures, Attuvampatti</span> (8:00 AM onward)</li>
+            <li>After wedding lunch (~1:00 PM) → take a local bus back to Dindigul → collect car → drive home</li>
+          </ol>
+        </section>
 
-<h2>✅ Trip Flow</h2>
-<ol>
-  <li>Drive to Dindigul</li>
-  <li>Park at <strong>Selvi Car Parking</strong></li>
-  <li>Walk → Dindigul Bus Stand → Take bus to Kodaikanal</li>
-  <li>Check-in at 11:00 AM</li>
-  <li>Saturday: Sangeeth (Evening)</li>
-  <li>Sunday: Wedding @ Green Pastures (8 AM)</li>
-  <li>Return → TNSTC bus → Pick car → Drive home</li>
-</ol>
+        <section class="card" style="margin-top:14px">
+          <h3 style="margin:0 0 8px 0">Bus timings — Local TNSTC (No AC)</h3>
+          <div class="muted small">These are the commonly available local government bus departures. Arrive 15–20 min early at the stand.</div>
 
-<hr>
+          <div style="margin-top:10px">
+            <strong>From Dindigul → Kodaikanal (Saturday morning)</strong>
+            <div class="bus-list" style="margin-top:8px">
+              <div class="chip">05:25</div>
+              <div class="chip">06:00</div>
+              <div class="chip">07:55</div>
+              <div class="chip">09:00</div>
+              <div class="chip">09:50</div>
+              <div class="chip">10:40</div>
+              <div class="chip">11:30</div>
+              <div class="chip">13:10</div>
+              <div class="chip">15:15</div>
+            </div>
+          </div>
 
-<h2>🚌 Bus Timings</h2>
+          <div style="margin-top:12px">
+            <strong>From Kodaikanal → Dindigul (Sunday after wedding)</strong>
+            <div class="bus-list" style="margin-top:8px">
+              <div class="chip">14:00 (approx)</div>
+              <div class="chip">15:15</div>
+              <div class="chip">16:00</div>
+              <div class="chip">~Last gov buses: before 17:30–18:00</div>
+            </div>
+            <div class="note" style="margin-top:10px">Recommended return window: <span class="bold">13:00–16:30</span> — return by afternoon to avoid night hill driving.</div>
+          </div>
+        </section>
 
-<h3>Dindigul → Kodaikanal (Saturday Morning)</h3>
-<ul>
-  <li>7:55 AM</li>
-  <li>9:00 AM</li>
-  <li>9:50 AM</li>
-  <li>10:40 AM</li>
-  <li>11:30 AM</li>
-</ul>
+        <section class="card" style="margin-top:14px">
+          <h3 style="margin:0 0 8px 0">Wedding & location</h3>
+          <div class="muted small">Sunday ceremony details (from printed invite)</div>
+          <ul style="margin-top:8px">
+            <li><span class="bold">Green Pastures – A Hill Country Resort, Attuvampatti, Kodaikanal</span></li>
+            <li><span class="bold">Muhurtham / Start:</span> 8:00 AM onward (Sunday, 14 Dec 2025)</li>
+            <li>Morning schedule → breakfast → muhurtham → games → photoshoot → lunch (~12:30–1:30 PM)</li>
+          </ul>
+        </section>
 
-<h3>Kodaikanal → Dindigul (Sunday After Wedding)</h3>
-<p><i>Local TNSTC buses run until early evening.</i></p>
-<ul>
-  <li>~2:00 PM</li>
-  <li>~3:15 PM</li>
-  <li>~4:00 PM</li>
-  <li><strong>Last local buses before 5:30–6:00 PM</strong></li>
-</ul>
+        <section class="card" style="margin-top:14px">
+          <h3 style="margin:0 0 8px 0">Important notes</h3>
+          <ul>
+            <li>Avoid driving down the ghat at night (low visibility, fog, wildlife). Prefer returning by afternoon.</li>
+            <li>Car stays at Selvi parking — photograph car + keep the receipt. Remove valuables.</li>
+            <li>Keep warm layers for Shayan (mornings ~11–13°C; nights ~11°C).</li>
+          </ul>
+        </section>
+      </div>
 
-<p><strong>Best return window:</strong> 1:00 PM – 4:30 PM (Daylight, safer downhill)</p>
+      <!-- sidebar -->
+      <aside class="sidebar">
+        <div class="card">
+          <h3 style="margin:0 0 8px 0">Packing & Checklist</h3>
+          <div class="muted small">Click to check items — state is saved locally in this browser.</div>
 
-<hr>
+          <div class="checklist" id="checklist" style="margin-top:10px">
+            <label class="item"><input type="checkbox" data-id="pack-warm"> Warm clothes (jackets, sweaters)</label>
+            <label class="item"><input type="checkbox" data-id="pack-shayan"> Shayan: outfits & essentials</label>
+            <label class="item"><input type="checkbox" data-id="pack-dress-sangeeth"> Sangeeth outfit (you & Doody)</label>
+            <label class="item"><input type="checkbox" data-id="pack-dress-wed"> Wedding outfits (you & Doody)</label>
+            <label class="item"><input type="checkbox" data-id="toiletries"> Toiletries & towels</label>
+            <label class="item"><input type="checkbox" data-id="meds"> Medicines & first aid</label>
+            <label class="item"><input type="checkbox" data-id="chargers"> Chargers & powerbank</label>
+            <label class="item"><input type="checkbox" data-id="snacks"> Snacks / water / baby food</label>
+            <label class="item"><input type="checkbox" data-id="parking-fee"> Park: Selvi Car Parking — ₹200 (2 days)</label>
+            <label class="item"><input type="checkbox" data-id="car-photos"> Take photos of car & note reg. no.</label>
+            <label class="item"><input type="checkbox" data-id="receipt"> Keep parking receipt / contact number</label>
+            <label class="item"><input type="checkbox" data-id="arrive-stand"> Arrive at Dindigul Bus Stand 15–20 min early</label>
+          </div>
 
-<h2>🧳 Packing Checklist</h2>
-<div class="checklist">
-  <label><input type="checkbox"> Warm clothes (11–13°C)</label><br>
-  <label><input type="checkbox"> Jackets (evening)</label><br>
-  <label><input type="checkbox"> Shayan's medicines</label><br>
-  <label><input type="checkbox"> Water & snacks</label><br>
-  <label><input type="checkbox"> Chargers / Power bank</label><br>
-  <label><input type="checkbox"> Umbrella</label><br>
-</div>
+          <div style="margin-top:12px; display:flex; gap:8px">
+            <button id="clearBtn" class="btn" style="padding:8px 10px;background:#e11d48;color:#fff">Clear</button>
+            <button id="exportBtn" class="btn" style="background:linear-gradient(90deg,var(--success),#4ade80)">Export checked</button>
+          </div>
+        </div>
 
-<h3>👗 Dress Checklist</h3>
-<div class="checklist">
-  <label><input type="checkbox"> Your Sangeeth outfit</label><br>
-  <label><input type="checkbox"> Doody’s Sangeeth outfit</label><br>
-  <label><input type="checkbox"> Your Sunday outfit</label><br>
-  <label><input type="checkbox"> Doody’s Sunday outfit</label><br>
-  <label><input type="checkbox"> Shayan’s dress (2 days)</label><br>
-  <label><input type="checkbox"> Backups + toiletries</label><br>
-</div>
+        <div class="card" style="margin-top:14px">
+          <h3 style="margin:0 0 8px 0">Quick details</h3>
+          <div class="small muted"><strong>Arrival Dindigul:</strong> ~08:00 (Sat)</div>
+          <div class="small muted"><strong>Check-in:</strong> 11:00 (Sat)</div>
+          <div class="small muted"><strong>Wedding:</strong> 8:00 AM (Sun)</div>
+          <div style="height:8px"></div>
+          <div class="small muted"><strong>Parking:</strong> Selvi Car Parking — ₹200 / 2 days</div>
+          <div class="small muted"><strong>Return window:</strong> 13:00–16:30 (Sun)</div>
+        </div>
 
-<hr>
+      </aside>
+    </div>
 
-<h2>🚗 Car Preparation</h2>
-<div class="checklist">
-  <label><input type="checkbox"> Fuel for full return trip</label><br>
-  <label><input type="checkbox"> Tyre pressure checked</label><br>
-  <label><input type="checkbox"> Remove valuables before parking</label><br>
-  <label><input type="checkbox"> Take photo of parked car</label><br>
-  <label><input type="checkbox"> Save parking receipt</label><br>
-</div>
+    <footer>
+      Tip: this page is for quick on-the-road reference. Check bus timing at the counter on the day.
+    </footer>
+  </div>
 
-<h2>🅿 Selvi Car Parking</h2>
-<ul>
-  <li><strong>Cost:</strong> ₹200 for 2 days</li>
-  <li><strong>Address:</strong> 277, Mendonsa Colony, Dindigul</li>
-  <li>Ask if gated & note their mobile number</li>
-</ul>
+  <!-- small script: persist checkboxes & export -->
+  <script>
+    (function(){
+      const checklist = document.getElementById('checklist');
+      const inputs = checklist.querySelectorAll('input[type=checkbox][data-id]');
+      const storageKey = 'kodai_trip_checklist_v1';
 
-<hr>
+      // load saved state
+      try {
+        const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
+        inputs.forEach(i => {
+          const id = i.dataset.id;
+          i.checked = !!saved[id];
+          i.addEventListener('change', saveState);
+        });
+      } catch(e){
+        inputs.forEach(i => i.addEventListener('change', saveState));
+      }
 
-<h2>🎉 Wedding Schedule</h2>
+      function saveState(){
+        const state = {};
+        inputs.forEach(i => state[i.dataset.id] = i.checked);
+        localStorage.setItem(storageKey, JSON.stringify(state));
+      }
 
-<h3>Saturday – Sangeeth</h3>
-<ul>
-  <li>Evening event</li>
-  <li>Light traditional wear</li>
-</ul>
+      document.getElementById('clearBtn').addEventListener('click', ()=>{
+        if(!confirm('Clear all checked items?')) return;
+        inputs.forEach(i => i.checked = false);
+        saveState();
+      });
 
-<h3>Sunday – Wedding</h3>
-<ul>
-  <li><strong>Time:</strong> 8:00 AM onwards</li>
-  <li><strong>Venue:</strong> Green Pastures, Attuvampatti</li>
-  <li>Breakfast → Muhurtham → Games → Lunch</li>
-  <li>Plan to leave Kodai between <strong>1 PM – 4:30 PM</strong></li>
-</ul>
+      document.getElementById('exportBtn').addEventListener('click', ()=>{
+        const checked = Array.from(inputs).filter(i => i.checked).map(i => {
+          const text = i.parentElement.textContent.trim();
+          return '- ' + text;
+        });
+        if(!checked.length){ alert('Nothing checked.'); return; }
+        // copy to clipboard
+        const text = 'Checked items:\\n' + checked.join('\\n');
+        navigator.clipboard?.writeText(text).then(()=> alert('Copied checked items to clipboard.'));
+      });
 
-<hr>
-
-<h2>⬇️ Return Journey (Sunday)</h2>
-<ol>
-  <li>Lunch at wedding venue</li>
-  <li>Go to Kodaikanal Bus Stand</li>
-  <li>Take TNSTC bus to Dindigul</li>
-  <li>Pick up car</li>
-  <li>Drive home before dark</li>
-</ol>
-
-<hr>
-
-<h2>📌 Notes</h2>
-<ul>
-  <li>Avoid downhill driving at night (fog + bison risk)</li>
-  <li>Keep Shayan warm in early morning</li>
-</ul>
-
+      // print button
+      document.getElementById('printBtn').addEventListener('click', ()=> window.print());
+    })();
+  </script>
 </body>
 </html>
